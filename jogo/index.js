@@ -1,106 +1,98 @@
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
-// Tamanho do bloco e a direção inicial da cobrinha
-const blockSize = 20;
-let snake = [{ x: 160, y: 160 }]; // Começando no centro
-let direction = "RIGHT";
-let food = { x: 80, y: 80 };
-let score = 0;
+const box = 20; // Tamanho de cada "bloco" da cobrinha
+let score = 0; // Pontuação
+let highscore = localStorage.getItem("highscore") ? parseInt(localStorage.getItem("highscore")) : 0; // Recorde
 
-// Controle da direção
-document.addEventListener("keydown", changeDirection);
+let snake = [];
+snake[0] = { x: 9 * box, y: 10 * box };
 
-function changeDirection(event) {
-    if (event.key === "ArrowUp" && direction !== "DOWN") {
-        direction = "UP";
-    } else if (event.key === "ArrowDown" && direction !== "UP") {
-        direction = "DOWN";
-    } else if (event.key === "ArrowLeft" && direction !== "RIGHT") {
-        direction = "LEFT";
-    } else if (event.key === "ArrowRight" && direction !== "LEFT") {
-        direction = "RIGHT";
+let food = {
+    x: Math.floor(Math.random() * 19 + 1) * box,
+    y: Math.floor(Math.random() * 19 + 1) * box,
+};
+
+let d; // Direção
+
+document.addEventListener("keydown", direction);
+
+function direction(event) {
+    if (event.keyCode == 37 && d != "RIGHT") {
+        d = "LEFT";
+    } else if (event.keyCode == 38 && d != "DOWN") {
+        d = "UP";
+    } else if (event.keyCode == 39 && d != "LEFT") {
+        d = "RIGHT";
+    } else if (event.keyCode == 40 && d != "UP") {
+        d = "DOWN";
     }
 }
 
-// Função para desenhar a cobrinha
-function drawSnake() {
-    snake.forEach(segment => {
-        ctx.fillStyle = "green";
-        ctx.fillRect(segment.x, segment.y, blockSize, blockSize);
-    });
-}
+function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-// Função para desenhar a comida
-function drawFood() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(food.x, food.y, blockSize, blockSize);
-}
+    // Atualizar a posição da cobrinha
+    let snakeX = snake[0].x;
+    let snakeY = snake[0].y;
 
-// Função para mover a cobrinha
-function moveSnake() {
-    let head = { ...snake[0] };
+    if (d == "LEFT") snakeX -= box;
+    if (d == "UP") snakeY -= box;
+    if (d == "RIGHT") snakeX += box;
+    if (d == "DOWN") snakeY += box;
 
-    if (direction === "UP") {
-        head.y -= blockSize;
-    } else if (direction === "DOWN") {
-        head.y += blockSize;
-    } else if (direction === "LEFT") {
-        head.x -= blockSize;
-    } else if (direction === "RIGHT") {
-        head.x += blockSize;
-    }
-
-    snake.unshift(head);
-    
-    // Verifica se a cobrinha comeu a comida
-    if (head.x === food.x && head.y === food.y) {
+    if (snakeX == food.x && snakeY == food.y) {
+        food = {
+            x: Math.floor(Math.random() * 19 + 1) * box,
+            y: Math.floor(Math.random() * 19 + 1) * box,
+        };
         score++;
-        generateFood();
+        if (score > highscore) {
+            highscore = score;
+            localStorage.setItem("highscore", highscore);
+        }
     } else {
-        snake.pop();
-    }
-}
-
-// Função para gerar nova comida em uma posição aleatória
-function generateFood() {
-    const x = Math.floor(Math.random() * (canvas.width / blockSize)) * blockSize;
-    const y = Math.floor(Math.random() * (canvas.height / blockSize)) * blockSize;
-    food = { x, y };
-}
-
-// Função para verificar colisões
-function checkCollisions() {
-    const head = snake[0];
-    
-    // Colisão com as bordas
-    if (head.x < 0 || head.x >= canvas.width || head.y < 0 || head.y >= canvas.height) {
-        return true;
+        snake.pop(); // Remove a última parte da cobrinha
     }
 
-    // Colisão com o corpo da cobrinha
-    for (let i = 1; i < snake.length; i++) {
-        if (snake[i].x === head.x && snake[i].y === head.y) {
+    let newHead = {
+        x: snakeX,
+        y: snakeY,
+    };
+
+    // Verificar se a cobrinha colidiu com o corpo ou as bordas
+    if (
+        snakeX < 0 ||
+        snakeX >= 400 ||
+        snakeY < 0 ||
+        snakeY >= 400 ||
+        collision(newHead, snake)
+    ) {
+        clearInterval(game);
+    }
+
+    snake.unshift(newHead);
+
+    // Aqui a cobrinha agora será verde, sem diferenciação entre cabeça e corpo
+    for (let i = 0; i < snake.length; i++) {
+        ctx.fillStyle = "#00FF00"; // Cor verde
+        ctx.fillRect(snake[i].x, snake[i].y, box, box);
+    }
+
+    ctx.fillStyle = "#FF0000"; // Cor da comida (vermelha)
+    ctx.fillRect(food.x, food.y, box, box);
+
+    document.getElementById("score").textContent = score;
+    document.getElementById("highscore").textContent = highscore;
+}
+
+function collision(head, array) {
+    for (let i = 0; i < array.length; i++) {
+        if (head.x == array[i].x && head.y == array[i].y) {
             return true;
         }
     }
-
     return false;
 }
 
-// Função para desenhar o jogo
-function drawGame() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    drawSnake();
-    drawFood();
-
-    moveSnake();
-
-    if (checkCollisions()) {
-        alert("Game Over! Pontuação: " + score);
-        document.location.reload(); // Reinicia o jogo
-    }
-}
-
-// Atualizar a tela a cada 100 milissegundos
-setInterval(drawGame, 100);
+let game = setInterval(draw, 100); // Jogo continua sendo desenhado a cada 100ms
