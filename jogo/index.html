@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Snake</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+        canvas {
+            background-color: #000;
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #fff;
+        }
+        h1 {
+            color: #fff;
+        }
+        #scoreboard {
+            color: #fff;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+       .pontuacao{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+       }
+       .nomes{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+        margin-top:50%;
+       }
+        </style>
+</head>
+<body>
+    <h1>Jogo da Cobrinha</h1>
+    <div id="scoreboard">
+        Pontuação: <span id="score">0</span> | Recorde: <span id="highscore">0</span>
+    </div>
+    <div class="pontuacao">
+        Pódio<br>
+    <div id="nomes"> Kadisa - 104 Pontos</div>
+</div>
+    <canvas id="gameCanvas" width="400" height="400"></canvas>
+    <script src="index.js"></script>
+</body>
+</html>
