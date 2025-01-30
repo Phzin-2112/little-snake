@@ -26,13 +26,28 @@
             font-size: 20px;
             margin-top: 10px;
         }
-    </style>
+       .pontuacao{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+       }
+       .nomes{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+        margin-top:50%;
+       }
+        </style>
 </head>
 <body>
     <h1>Jogo da Cobrinha</h1>
     <div id="scoreboard">
         Pontuação: <span id="score">0</span> | Recorde: <span id="highscore">0</span>
     </div>
+    <div class="pontuacao">
+        Pódio<br>
+    <div id="nomes"> Kadisa - 104 Pontos</div>
+</div>
     <canvas id="gameCanvas" width="400" height="400"></canvas>
     <script src="index.js"></script>
 </body>
