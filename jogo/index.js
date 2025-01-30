@@ -16,15 +16,14 @@ let food = {
 let d; // Direção
 
 document.addEventListener("keydown", direction);
-
 function direction(event) {
-    if (event.keyCode == 37 && d != "RIGHT") {
+    if (event.key === "a" && d != "RIGHT") { // 'A' para mover para a esquerda
         d = "LEFT";
-    } else if (event.keyCode == 38 && d != "DOWN") {
+    } else if (event.key === "w" && d != "DOWN") { // 'W' para mover para cima
         d = "UP";
-    } else if (event.keyCode == 39 && d != "LEFT") {
+    } else if (event.key === "d" && d != "LEFT") { // 'D' para mover para a direita
         d = "RIGHT";
-    } else if (event.keyCode == 40 && d != "UP") {
+    } else if (event.key === "s" && d != "UP") { // 'S' para mover para baixo
         d = "DOWN";
     }
 }
