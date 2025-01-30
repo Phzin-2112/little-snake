@@ -5,8 +5,9 @@ const box = 20; // Tamanho de cada "bloco" da cobrinha
 let score = 0; // Pontuação
 let highscore = localStorage.getItem("highscore") ? parseInt(localStorage.getItem("highscore")) : 0; // Recorde
 
-let snake = [];
-snake[0] = { x: 9 * box, y: 10 * box };
+// Posição inicial da cobrinha no meio da tela
+const initialPosition = { x: 9 * box, y: 10 * box }; 
+let snake = [{ ...initialPosition }]; // A cobrinha começa no meio da tela
 
 let food = {
     x: Math.floor(Math.random() * 19 + 1) * box,
@@ -14,6 +15,8 @@ let food = {
 };
 
 let d; // Direção
+let primeiravida = localStorage.getItem("primeiravida"); // Flag para a segunda vida
+let typedKeys = ""; // Acompanhando as teclas digitadas
 
 document.addEventListener("keydown", direction);
 
@@ -36,6 +39,18 @@ function direction(event) {
     } else if (event.key === "s" && d != "UP") { // 'S' para mover para baixo
         d = "DOWN";
     }
+
+    // Acompanhar as teclas digitadas para ativar a segunda vida
+    typedKeys += event.key.toLowerCase();
+    if (typedKeys.includes("phzin")) {
+        secondLifeActive = true;
+        typedKeys = ""; // Resetando após ativar a segunda vida
+        alert("Segunda vida ativada!");
+        
+        snakeX = box/2;
+        snakeY = box/2;
+    
+}
 }
 
 function draw() {
@@ -77,20 +92,28 @@ function draw() {
         snakeY >= 400 ||
         collision(newHead, snake)
     ) {
-        clearInterval(game);
+        if (!primeiravida) {
+            localStorage.setItem("primeiravida",true);
+            window.location.reload();
+        } else {
+            clearInterval(game);
+            alert("Game Over!");
+        }
     }
 
     snake.unshift(newHead);
 
-    // Aqui a cobrinha agora será verde, sem diferenciação entre cabeça e corpo
+    // Desenhar a cobrinha
     for (let i = 0; i < snake.length; i++) {
         ctx.fillStyle = "#00FF00"; // Cor verde
         ctx.fillRect(snake[i].x, snake[i].y, box, box);
     }
 
+    // Desenhar a comida
     ctx.fillStyle = "#FF0000"; // Cor da comida (vermelha)
     ctx.fillRect(food.x, food.y, box, box);
 
+    // Atualizar os elementos da pontuação
     document.getElementById("score").textContent = score;
     document.getElementById("highscore").textContent = highscore;
 }
