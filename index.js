@@ -192,7 +192,7 @@ function restartGame() {
     typedKeys = "";
     secondLifeActive = false;
     // Reiniciar o jogo
-    game = setInterval(draw, 90);
+    game = setInterval(draw, 100);
 }
 
 
