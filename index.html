@@ -37,7 +37,7 @@
         font-size: 20px;
         margin-top:50%;
        }
-        </style>
+    </style>
 </head>
 <body>
     <h1>Jogo da Cobrinha</h1>
@@ -46,9 +46,16 @@
     </div>
     <div class="pontuacao">
         Pódio<br>
-    <div id="nomes"> Yuri - 106 Pontos<br> Kadisa - 104 Pontos<br> Pedro - 110 Pontos</div>
-</div>
-    <canvas id="gameCanvas" width="1000" height="600"></canvas>
+        <div id="nomes"> Yuri - 106 Pontos<br> Kadisa - 104 Pontos<br> Pedro - 40 Pontos</div>
+    </div>
+    <canvas id="gameCanvas" width="1000" height="500"></canvas>
+
+    <!-- Música de fundo -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://kappa.vgmsite.com/soundtracks/snake-arena-android/rtknkypdho/Track%201%20%28Title%20Screen%20Remix%29.mp3" type="audio/mp3">
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
     <script src="index.js"></script>
 </body>
 </html>
