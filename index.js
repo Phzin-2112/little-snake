@@ -6,7 +6,7 @@ let score = 0; // Pontuação
 let highscore = localStorage.getItem("highscore") ? parseInt(localStorage.getItem("highscore")) : 0; // Recorde
 
 // Posição inicial da cobrinha 
-const initialPosition = { x: 9 * box, y: 10 * box };
+const initialPosition = { x: 25 * box, y: 12 * box };
 let snake = [{ ...initialPosition }]; // A cobrinha começa no meio da tela
 
 let food = {
@@ -92,15 +92,7 @@ function draw() {
         snakeY >= canvas.height ||
         collision(newHead, snake)
     ) {
-        if (primeiravida && !secondLifeActive) {
-            // Usar a segunda vida e continuar o jogo
-            secondLifeActive = true;
-            snake = [{ ...initialPosition }]; // Coloca a cobrinha no início novamente
-            alert('Você usou sua segunda vida!');
-        } else if (!primeiravida) {
-            localStorage.setItem("primeiravida", true); // Ativa a segunda vida
-            window.location.reload(); // Reinicia o jogo
-        } else {
+        if (primeiravida ) {
             clearInterval(game); // Pausa o jogo
             backgroundMusic.pause(); // Pausar a música quando o jogo acabar
             backgroundMusic.currentTime = 0; // Reseta o tempo da música
@@ -140,13 +132,15 @@ function restartGame() {
     food = {
         x: Math.floor(Math.random() * (canvas.width / box)) * box,
         y: Math.floor(Math.random() * (canvas.height / box)) * box,
+        
     };
-    score = 0; // Resetando a pontuação
+    
+    score ; // Resetando a pontuação
     d = undefined;
     typedKeys = "";
-    secondLifeActive = false;
+    secondLifeActive = false; 
     // Reiniciar o jogo
-    game = setInterval(draw, 85);
+    game = setInterval(draw, 90);
 }
 
-let game = setInterval(draw, 85); // Jogo continua sendo desenhado a cada 85ms
+let game = setInterval(draw, 90); // Jogo continua sendo desenhado a cada 85ms
