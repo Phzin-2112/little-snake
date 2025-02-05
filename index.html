@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Snake</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+        }
+        canvas {
+            background-color: #000;
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #969696;
+        }
+        h1 {
+            color: #fff;
+        }
+        #scoreboard {
+            color: #fff;
+            font-size: 20px;
+            margin-top: 10px;
+        }
+       .pontuacao{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+       }
+       .nomes{
+        color: #fff;
+        margin-left: 60%;
+        font-size: 20px;
+        margin-top:50%;
+       }
+    </style>
+</head>
+<body>
+    <h1>Jogo da Cobrinha</h1>
+    <div id="scoreboard">
+        Pontuação: <span id="score">0</span> | Recorde: <span id="highscore">0</span>
+    </div>
+    <div class="pontuacao">
+        Pódio<br>
+        <div id="nomes"> Yuri - 106 Pontos<br> Kadisa - 104 Pontos<br> Pedro - 40 Pontos</div>
+    </div>
+    <canvas id="gameCanvas" width="1000" height="500"></canvas>
+
+    <!-- Música de fundo -->
+    <audio id="backgroundMusic" loop>
+        <source src="https://kappa.vgmsite.com/soundtracks/snake-arena-android/rtknkypdho/Track%201%20%28Title%20Screen%20Remix%29.mp3" type="audio/mp3">
+        Seu navegador não suporta a tag de áudio.
+    </audio>
+
+    <script src="index.js"></script>
+</body>
+</html>
