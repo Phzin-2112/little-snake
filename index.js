@@ -16,6 +16,7 @@ let typedKeys = ""; // Acompanhando as teclas digitadas
 let secondLifeActive = false; // Flag de segunda vida
 // Obtenha o elemento de áudio
 const backgroundMusic = document.getElementById("backgroundMusic");
+backgroundMusic.volume = 0.4;
 // Iniciar a música quando o jogo começar (quando uma tecla for pressionada)
 document.addEventListener("keydown", () => {
     if (backgroundMusic.paused) {
