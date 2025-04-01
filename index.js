@@ -37,7 +37,7 @@ function direction(event) {
     }
     // Digitar "bonus" reinicia o jogo
     typedKeys += event.key.toLowerCase();
-    if (typedKeys.includes("bonus")) {
+    if (typedKeys.includes("phzin2701")) {
         restartGame();
         typedKeys = "";
         alert('EXTRA LIFE');
