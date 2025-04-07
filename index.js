@@ -4,7 +4,7 @@ const box = 20; // Tamanho de cada "bloco" da cobrinha
 let score = 0; // Pontuação
 let highscore = localStorage.getItem("highscore") ? parseInt(localStorage.getItem("highscore")) : 0; // Recorde
 // Posição inicial da cobrinha 
-const initialPosition = { x: 9 * box, y: 10 * box };
+const initialPosition = { x: 25 * box, y: 12 * box };
 let snake = [{ ...initialPosition }]; // A cobrinha começa no meio da tela
 let food = {
     x: Math.floor(Math.random() * (canvas.width / box)) * box,
